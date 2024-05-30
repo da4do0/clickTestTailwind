@@ -1,3 +1,4 @@
+import React from 'react';
 import logo from '../../../public/logo.png';
 import userSvg from '../../assets/user.svg';
 
