@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import InfoTest from "./infoTest";
 import TimeTest from "./timeTest";
 import Leaderboard from "./leaderboard";
@@ -9,34 +9,89 @@ const Main = ()=>{
     const [goalSeconds, goalSeconds_set] = useState(0);
     const [seconds, seconds_set] = useState(0);
 
-    const timer =()=>{
-        seconds_set((v)=>v+1);
+    /* const timer =useRef()
+
+    const startTimer= ()=>{
+        if(seconds==goalSeconds){
+            stopTimer();
+        }
+        debugger;
+        click_set(0);
+        clearInterval(timer.current);
+        timer.current = setInterval(()=>seconds_set((v)=>v+1), 1000);
+    };
+
+    const stopTimer=()=>{
+        clearInterval(timer.current);
     }
 
-    useEffect(()=>{
-        console.log(seconds)
-    }, [seconds])
-
-    async function incrementSeconds() {
-        while (seconds < goalSeconds) {
-          await new Promise(resolve => setTimeout(resolve, 1000)); // Attende 1 secondo
-          seconds_set((v) => v+1);
-        }
-      }
+    const updateTime = ()=>{
+        seconds_set(new Date());
+    }
 
     const mouseClick =()=>{
-        incrementSeconds();
-        click_set((v)=> v+1);
-    }
-
-    const uploadSeconds = (newSeconds)=>{
-        seconds_set(newSeconds);
+        if(goalSeconds!==0){
+            if(!timer.current){
+                startTimer();
+            }
+            if(seconds==goalSeconds){
+                stopTimer();
+            }else{
+                click_set((v)=> v+1);
+            }
+        }
     }
 
     const uploadGoalSeconds = (newSeconds)=>{
-        console.log(newSeconds);
         goalSeconds_set(newSeconds);
+        console.log(newSeconds)
+        seconds_set(0);
+        click_set(0);
+    } */
+
+    const timer = useRef(null);
+
+  const startTimer = () => {
+    if (timer.current) {
+      clearInterval(timer.current);
     }
+    timer.current = setInterval(() => {
+      seconds_set((v) => v + 1);
+    }, 1000);
+  };
+
+  const stopTimer = () => {
+    if (timer.current) {
+      clearInterval(timer.current);
+      timer.current = null;
+    }
+  };
+
+  const mouseClick = () => {
+    if (goalSeconds !== 0 || goalSeconds !== seconds) {
+        if(seconds!==goalSeconds){
+            click_set((v) => v + 1);
+        }
+        if (!timer.current) {
+            startTimer();
+        }
+    }
+  };
+
+  const uploadGoalSeconds = (newSeconds) => {
+    goalSeconds_set(newSeconds);
+    seconds_set(0);
+    click_set(0);
+    if (timer.current) {
+      stopTimer();
+    }
+  };
+
+  useEffect(() => {
+    if (seconds >= goalSeconds && goalSeconds !== 0) {
+      stopTimer();
+    }
+  }, [seconds, goalSeconds]);
 
     return(
         <main className=" py-[50px]">

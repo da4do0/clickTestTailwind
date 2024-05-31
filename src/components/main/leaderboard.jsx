@@ -22,8 +22,7 @@ const Leaderboard = ()=>{
                     listaUser.map(({nickname, score})=>{
                         return(
                             <>
-                                <div className=" border border-red flex flex-row">
-                                    
+                                <div className=" border border-red flex flex-row">                    
                                     <span>{nickname}</span>
                                     <span>{score}</span>
                                 </div>
