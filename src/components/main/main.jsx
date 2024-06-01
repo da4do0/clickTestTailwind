@@ -56,8 +56,8 @@ const Main = ()=>{
       clearInterval(timer.current);
     }
     timer.current = setInterval(() => {
-      seconds_set((v) => v + 1);
-    }, 1000);
+      seconds_set((v) => v + (1/60));
+    }, (1000/60));
   };
 
   const stopTimer = () => {
@@ -68,7 +68,7 @@ const Main = ()=>{
   };
 
   const mouseClick = () => {
-    if (goalSeconds !== 0 || goalSeconds !== seconds) {
+    if (goalSeconds !== 0 && goalSeconds !== Math.trunc(seconds)) {
         if(seconds!==goalSeconds){
             click_set((v) => v + 1);
         }
