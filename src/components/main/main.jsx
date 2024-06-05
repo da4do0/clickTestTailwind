@@ -3,13 +3,22 @@ import InfoTest from "./infoTest";
 import TimeTest from "./timeTest";
 import Leaderboard from "./leaderboard";
 import ClickArea from "./clickArea";
-import Score from "./score";
+import PopUp from "./popUp";
+import { getContrastColor } from "@mantine/core";
 
 const Main = () => {
   const [click, click_set] = useState(0);
+  const [clickPerSec, clickPerSec_set] = useState(0);
   const [goalSeconds, goalSeconds_set] = useState(0);
   const [seconds, seconds_set] = useState(0);
-  const [showResult, showResult_set] = useState(true);
+  const [secondsStep, secondsStep_set] = useState(0);
+  const [show, show_set] = useState(false);
+  const [data, data_set] = useState([]);
+
+  const addData=(sec, clickPerSec) =>{
+    data_set([...data, {date: sec.toString(), click: clickPerSec}]);
+  }
+
   const timer = useRef(null);
 
   const startTimer = () => {
@@ -32,6 +41,7 @@ const Main = () => {
     if (goalSeconds !== 0 && goalSeconds !== Math.trunc(seconds)) {
       if (seconds !== goalSeconds) {
         click_set((v) => v + 1);
+        clickPerSec_set((v) => v + 1);
       }
       if (!timer.current) {
         startTimer();
@@ -43,21 +53,33 @@ const Main = () => {
     goalSeconds_set(newSeconds);
     seconds_set(0);
     click_set(0);
+    secondsStep_set(0);
+    data_set([]);
     if (timer.current) {
       stopTimer();
     }
   };
 
   useEffect(() => {
+    if(Math.trunc(seconds) === (secondsStep+1)){
+      secondsStep_set((v)=>v+1);
+      addData(Math.trunc(seconds), clickPerSec);
+      clickPerSec_set(0);
+    }
     if (seconds >= goalSeconds && goalSeconds !== 0) {
       stopTimer();
-      showResult_set(true);
+      console.log(data)
+      show_set(true);
     }
-  }, [seconds, goalSeconds]);
+  }, [seconds, goalSeconds, clickPerSec]);
+
+  const hiddenPopUp =()=>{
+    show_set(false);
+  }
 
   return (
     <>
-      <Score show={showResult} />
+      <PopUp show={show} data={data} setShow={hiddenPopUp}/>
       <main className=" py-[50px]">
         <section className="border border-red grid grid-cols-4 grid-rows-4 gap-4 w-[80%] h-[450px] mx-auto my-0">
           <InfoTest seconds={seconds} clicks={click} />
@@ -68,7 +90,6 @@ const Main = () => {
           />
 
           <Leaderboard />
-
           <ClickArea mouseClick={mouseClick} />
         </section>
       </main>
@@ -77,3 +98,6 @@ const Main = () => {
 };
 
 export default Main;
+
+//avviare servizio tramite cron avvia richieste paginate con lavori ad intermittenza
+//salvare dati utenti sulla macchina dell'utente
