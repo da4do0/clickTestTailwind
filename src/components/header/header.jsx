@@ -4,7 +4,7 @@ import userSvg from '../../assets/user.svg';
 
 export default function Header(){
     return(
-        <header className=' h-[100px] border-b-[1px] border-[#ffffff34] flex justify-around items-center'>
+        <header className=' h-[100px] border-b-[1px] z-50 relative bg-[#323437] border-[#ffffff34] flex justify-around items-center'>
             <div className='w-[100px]'>
                 <img src={logo} alt="logo"/>
             </div>

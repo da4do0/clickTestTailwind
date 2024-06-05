@@ -79,7 +79,7 @@ const Main = () => {
 
   return (
     <>
-      <PopUp show={show} data={data} setShow={hiddenPopUp}/>
+      <PopUp show={show} data={data} setShow={hiddenPopUp} seconds={seconds} clicks={click}/>
       <main className=" py-[50px]">
         <section className="border border-red grid grid-cols-4 grid-rows-4 gap-4 w-[80%] h-[450px] mx-auto my-0">
           <InfoTest seconds={seconds} clicks={click} />
