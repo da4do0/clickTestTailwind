@@ -5,6 +5,7 @@ import Leaderboard from "./leaderboard";
 import ClickArea from "./clickArea";
 import PopUp from "./popUp";
 import { getContrastColor } from "@mantine/core";
+import { MantineProvider } from "@mantine/core";
 
 const Main = () => {
   const [click, click_set] = useState(0);
@@ -79,6 +80,7 @@ const Main = () => {
 
   return (
     <>
+    <MantineProvider>
       <PopUp show={show} data={data} setShow={hiddenPopUp} seconds={seconds} clicks={click}/>
       <main className=" py-[50px]">
         <section className="border border-red grid grid-cols-4 grid-rows-4 gap-4 w-[80%] h-[450px] mx-auto my-0">
@@ -93,6 +95,7 @@ const Main = () => {
           <ClickArea mouseClick={mouseClick} />
         </section>
       </main>
+      </MantineProvider>
     </>
   );
 };

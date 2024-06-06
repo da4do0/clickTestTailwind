@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import Header from './components/header/header'
+import Header from './routes/header'
+import { MantineProvider } from "@mantine/core";
 import Main from './components/main/main'
 
 function App() {
@@ -7,8 +8,10 @@ function App() {
 
   return (
     <>
+    <MantineProvider>
       <Header/>
       <Main/>
+    </MantineProvider>
     </>
   )
 }

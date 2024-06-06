@@ -1,12 +1,12 @@
 import React from "react";
 import { AreaChart } from "@mantine/charts";
-import { MantineProvider } from "@mantine/core";
+
 import "@mantine/core/styles.css";
 
 const PopUp = ({ show, data, setShow, userName = "USER", seconds, clicks}) => {
   const display = show ? "block" : "hidden";
   return (
-    <MantineProvider>
+    
       <section
         className={`w-[100vw] h-[100dvh] z-10 ${display} bg-[#ffffff00] absolute top-0`}
       >
@@ -46,7 +46,6 @@ const PopUp = ({ show, data, setShow, userName = "USER", seconds, clicks}) => {
           </div>
         </div>
       </section>
-    </MantineProvider>
   );
 };
 
