@@ -6,6 +6,7 @@ import ClickArea from "./clickArea";
 import PopUp from "./popUp";
 import { getContrastColor } from "@mantine/core";
 import { MantineProvider } from "@mantine/core";
+import { useOperationDb } from "../../hooks/operationDb.hook";
 
 const Main = () => {
   const [click, click_set] = useState(0);
@@ -15,6 +16,7 @@ const Main = () => {
   const [secondsStep, secondsStep_set] = useState(0);
   const [show, show_set] = useState(false);
   const [data, data_set] = useState([]);
+  const {newRowTest} = useOperationDb();
 
   const addData=(sec, clickPerSec) =>{
     data_set([...data, {date: sec.toString(), click: clickPerSec}]);
@@ -35,6 +37,7 @@ const Main = () => {
     if (timer.current) {
       clearInterval(timer.current);
       timer.current = null;
+      newRowTest(goalSeconds, (click/seconds))
     }
   };
 

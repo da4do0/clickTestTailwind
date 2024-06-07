@@ -12,8 +12,9 @@ const TimeTest = ({ uploadGoalSeconds, goalSeconds }) => {
               className=" text-center border border-red rounded-lg py-2 px-3"
               style={{ border: goalSeconds == time ? "1px solid red" : "" }}
               onClick={() => uploadGoalSeconds(time)}
+              key={time}
             >
-              <span key={time}>{time} Seconds</span>
+              <span>{time} Seconds</span>
             </div>
           );
         })}

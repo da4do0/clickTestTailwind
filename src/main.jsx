@@ -1,14 +1,14 @@
-import React, {  useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import {SupabaseProvider} from './hooks/supabaseSession.hook';
-import {DataUserLogin} from './hooks/dataUserLogin.hook';
+import { SupabaseProvider } from "./hooks/supabaseSession.hook";
+import { DataUserLogin } from "./hooks/dataUserLogin.hook";
 
 import Header from "./routes/header";
 import Main from "./routes/main/mainContainer";
 import User from "./routes/user/user";
-
+import { OperationProvider } from "./hooks/operationDb.hook";
 
 const router = createBrowserRouter([
   {
@@ -30,9 +30,11 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <SupabaseProvider>
-      <DataUserLogin>
-        <RouterProvider router={router} />
-      </DataUserLogin>
+      <OperationProvider>
+        <DataUserLogin>
+          <RouterProvider router={router} />
+        </DataUserLogin>
+      </OperationProvider>
     </SupabaseProvider>
   </React.StrictMode>
 );
