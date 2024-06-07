@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {SupabaseProvider} from './hooks/supabaseSession.hook';
+import {DataUserLogin} from './hooks/dataUserLogin.hook';
 
 import Header from "./routes/header";
 import Main from "./routes/main/mainContainer";
@@ -29,7 +30,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <SupabaseProvider>
-      <RouterProvider router={router} />
+      <DataUserLogin>
+        <RouterProvider router={router} />
+      </DataUserLogin>
     </SupabaseProvider>
   </React.StrictMode>
 );
