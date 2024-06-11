@@ -14,6 +14,7 @@ export const OperationProvider = ({ children }) => {
       .from("tests")
       .insert([{ tempo: tempoTest, click: punteggioTest}])
       .select(); */
+      
   };
 
   const uploadNickname = (username)=>{
