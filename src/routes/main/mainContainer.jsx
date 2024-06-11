@@ -4,8 +4,6 @@ import TimeTest from "./timeTest";
 import Leaderboard from "./leaderboard";
 import ClickArea from "./clickArea";
 import PopUp from "./popUp";
-import { getContrastColor } from "@mantine/core";
-import { MantineProvider } from "@mantine/core";
 import { useOperationDb } from "../../hooks/operationDb.hook";
 
 const Main = () => {
@@ -16,7 +14,7 @@ const Main = () => {
   const [secondsStep, secondsStep_set] = useState(0);
   const [show, show_set] = useState(false);
   const [data, data_set] = useState([]);
-  const {newRowTest} = useOperationDb();
+  const {newRowClick} = useOperationDb();
 
   const addData=(sec, clickPerSec) =>{
     data_set([...data, {date: sec.toString(), click: clickPerSec}]);
@@ -37,9 +35,17 @@ const Main = () => {
     if (timer.current) {
       clearInterval(timer.current);
       timer.current = null;
-      newRowTest(goalSeconds, (click/seconds))
+      newRowClick(goalSeconds, (click/seconds).toFixed(1), returnDate())
     }
   };
+
+  const returnDate = ()=>{
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `{${year}-${month}-${day}}`;
+  }
 
   const mouseClick = () => {
     if (goalSeconds !== 0 && goalSeconds !== Math.trunc(seconds)) {
@@ -83,7 +89,7 @@ const Main = () => {
 
   return (
     <>
-    <MantineProvider>
+    
       <PopUp show={show} data={data} setShow={hiddenPopUp} seconds={seconds} clicks={click}/>
       <main className=" py-[50px]">
         <section className="border border-red grid grid-cols-4 grid-rows-4 gap-4 w-[80%] h-[450px] mx-auto my-0">
@@ -98,7 +104,6 @@ const Main = () => {
           <ClickArea mouseClick={mouseClick} />
         </section>
       </main>
-      </MantineProvider>
     </>
   );
 };
