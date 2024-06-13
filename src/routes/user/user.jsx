@@ -7,40 +7,48 @@ const User = () => {
   const [userInput, userInput_set] = useState("");
   const [passInput, passInput_set] = useState("");
   const [showLogin, showLogin_set] = useState(true);
-  const [dataDTests, dataDTests_set] = useState([]);
+  const [busyChar, buryChar_set] = useState(true);
 
-  const { newUserRow, login, getUsername, dataDayliTests, getDataTests } = useOperationDb();
+  const {
+    newUserRow,
+    login,
+    getUsername,
+    dataDayliTests,
+    waitDayliTests,
+    dataDailyTest,
+    loginDone,
+    registerDone,
+    nickname
+  } = useOperationDb();
+
+  useEffect(()=>{
+    usernameI_set(nickname);
+  }, [nickname])
+
 
   useEffect(() => {
-    if (getUsername() !== null) {
-      usernameI_set(getUsername());
+    usernameI_set(nickname);
+    console.log(usernameI, "ciaoooooooooo")
+    if(nickname !== ""){
+      dataDailyTest();
     }
   }, []);
 
-
-  useEffect(()=>{
-    
-    console.log(getDataTests())
-    if(dataDayliTests !== undefined){
-      console.log(getDataTests())
-      console.log(dataDayliTests)
-      dataDTests_set(dataDayliTests)
-    }
-  }, [dataDayliTests, usernameI])
-
   const newUser = async (e) => {
     e.preventDefault();
-    if (newUserRow(userInput, passInput)) {
-      usernameI_set(userInput);
-    }
+    newUserRow(userInput, passInput);
     //TODO: else{messaggio errore user gia' esistente}
   };
 
+  useEffect(() => {
+    if (registerDone) {
+      showLogin_set(true);
+    }
+  }, [registerDone]);
+
   const loginUser = (e) => {
     e.preventDefault();
-    if (login(userInput, passInput)) {
-      usernameI_set(userInput);
-    }
+    login(userInput, passInput);
     //TODO: else{user o password errati}
   };
 
@@ -56,7 +64,6 @@ const User = () => {
     return showLogin ? (
       <>
         <Login
-          newUser={newUser}
           newUserInput={newUserInput}
           newPassInput={newPassInput}
           loginUser={loginUser}
@@ -81,10 +88,10 @@ const User = () => {
         {usernameI ? (
           <>
             <section className=" border border-red-950 w-[70%] h-[60%]">
-              <div>
+              <div aria-busy={busyChar}>
                 <AreaChart
                   h={300}
-                  data={dataDTests}
+                  data={dataDayliTests || []}
                   dataKey="date"
                   type="split"
                   strokeWidth={1}
@@ -93,7 +100,6 @@ const User = () => {
                   series={[{ name: "cps", color: "bright" }]}
                 />
               </div>
-              <button onClick={getDataTests}>click</button>
               {/* //todo: hook che piglia i dati da operationdb e li ficca nei grafici */}
             </section>
           </>
