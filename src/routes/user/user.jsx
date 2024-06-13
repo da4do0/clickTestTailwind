@@ -10,47 +10,40 @@ const User = () => {
   const [userInput, userInput_set] = useState("");
   const [passInput, passInput_set] = useState("");
   const [showLogin, showLogin_set] = useState(true);
-  const [busyChar, buryChar_set] = useState(true);
+  const [dataDTests, dataDTests_set] = useState([]);
 
-  const {
-    newUserRow,
-    login,
-    getUsername,
-    dataDayliTests,
-    waitDayliTests,
-    dataDailyTest,
-    loginDone,
-    registerDone,
-    nickname,
-  } = useOperationDb();
+  const { newUserRow, login, getUsername, dataDayliTests, getDataTests } = useOperationDb();
 
   useEffect(() => {
-    usernameI_set(nickname);
-  }, [nickname]);
-
-  useEffect(() => {
-    usernameI_set(nickname);
-    console.log(usernameI, "ciaoooooooooo");
-    if (nickname !== "") {
-      dataDailyTest();
+    if (getUsername() !== null) {
+      usernameI_set(getUsername());
     }
   }, []);
 
+
+  useEffect(()=>{
+    
+    console.log(getDataTests())
+    if(dataDayliTests !== undefined){
+      console.log(getDataTests())
+      console.log(dataDayliTests)
+      dataDTests_set(dataDayliTests)
+    }
+  }, [dataDayliTests, usernameI])
+
   const newUser = async (e) => {
     e.preventDefault();
-    newUserRow(userInput, passInput);
+    if (newUserRow(userInput, passInput)) {
+      usernameI_set(userInput);
+    }
     //TODO: else{messaggio errore user gia' esistente}
   };
 
-  useEffect(() => {
-    if (registerDone) {
-      showLogin_set(true);
-    }
-  }, [registerDone]);
-
   const loginUser = (e) => {
     e.preventDefault();
-    login(userInput, passInput);
+    if (login(userInput, passInput)) {
+      usernameI_set(userInput);
+    }
     //TODO: else{user o password errati}
   };
 
@@ -66,6 +59,7 @@ const User = () => {
     return showLogin ? (
       <>
         <Login
+          newUser={newUser}
           newUserInput={newUserInput}
           newPassInput={newPassInput}
           loginUser={loginUser}
@@ -89,30 +83,20 @@ const User = () => {
       <main className=" absolute top-0 h-[100vh] w-[100%] grid place-items-center border border-red-950">
         {usernameI ? (
           <>
-            <section className=" border border-red-950 w-[70%] h-[40%]">
-              <div className="w-[100%] h-[100%]">
-                <section className=" bg-red-800 w-[60%] h-[100%] p-3">
-                  <div className="border border-red-900 grid place-items-center w-[150px] h-[150px] overflow-hidden rounded-[100%]">
-                    <img src={USER} alt="user's profile pic" srcset="" className=" object-cover w-[100%] h-[100%]"/>
-                  </div>
-                </section>
-                <section>
-                  <TestChart/>
-                </section>
-
-                {/* <div>Hisotry tests</div>
-                <div >
-                  <AreaChart
-                    data={dataDayliTests || []}
-                    dataKey="date"
-                    type="split"
-                    strokeWidth={1}
-                    dotProps={{ r: 2, strokeWidth: 1 }}
-                    activeDotProps={{ r: 3, strokeWidth: 1 }}
-                    series={[{ name: "cps", color: "bright" }]}
-                  />
-                </div> */}
+            <section className=" border border-red-950 w-[70%] h-[60%]">
+              <div>
+                <AreaChart
+                  h={300}
+                  data={dataDTests}
+                  dataKey="date"
+                  type="split"
+                  strokeWidth={1}
+                  dotProps={{ r: 2, strokeWidth: 1 }}
+                  activeDotProps={{ r: 3, strokeWidth: 1 }}
+                  series={[{ name: "cps", color: "bright" }]}
+                />
               </div>
+              <button onClick={getDataTests}>click</button>
               {/* //todo: hook che piglia i dati da operationdb e li ficca nei grafici */}
             </section>
           </>
