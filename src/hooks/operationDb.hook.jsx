@@ -5,15 +5,19 @@ const OperationDb = createContext();
 
 export const OperationProvider = ({ children }) => {
   const { supabase } = useSupabase();
-  const [id, id_set] = useState("");
-  const [nickname, nickname_set] = useState(null);
+  const [id, id_set] = useState(15);
+  const [nickname, nickname_set] = useState("da4do0");
   const [dataDayliTests, dataDayliTests_set] = useState([]);
+  const [registerDone, registerDone_set] = useState(null);
+  const [chartTestData, chartTestData_set] = useState([]);
 
   const newRowClick = async (tempoTest, punteggioTest, date) => {
     if (nickname) {
       await supabase
         .from("tests")
-        .insert([{id_utente: id, tempo: tempoTest, cps: punteggioTest, data: date}])
+        .insert([
+          { id_utente: id, tempo: tempoTest, cps: punteggioTest, data: date },
+        ])
         .select();
     }
   };
@@ -22,26 +26,28 @@ export const OperationProvider = ({ children }) => {
     nickname_set(username);
   };
 
-  const uploadIDUser = async (username)=> {
+  const uploadIDUser = async (username) => {
     let { data, error } = await supabase
       .from("Utenti")
       .select("id")
       .like("nickname", username);
     id_set(data?.[0]?.id);
-  }
+  };
 
   const newUserRow = async (username, password) => {
     const checkRowUser = await checkUsername(username);
-    if (!checkRowUser?.[0]?.id) {
-      return false;
+    console.log(checkRowUser)
+    if (checkRowUser.length ===0) {
+      const {data}=await supabase
+        .from("Utenti")
+        .insert([{ nickname: username, password: password }])
+        .select();
+      if(data.length>0){
+        uploadNickname(username);
+        uploadIDUser(username);
+        registerDone_set(true);
+      }
     }
-    id_set(checkRowUser?.[0]?.id);
-    uploadNickname(username);
-    await supabase
-      .from("Utenti")
-      .insert([{ nickname: username, password: password }])
-      .select();
-    return true;
   };
 
   const login = async (username, password) => {
@@ -51,13 +57,12 @@ export const OperationProvider = ({ children }) => {
       .like("nickname", username)
       .like("password", password);
 
-    if (!data?.[0]?.id) {
-      return false;
-    }
+    console.log(data);
 
-    uploadNickname(username);
-    uploadIDUser(username);
-    return true;
+    if (data.length > 0) {
+      uploadNickname(username);
+      uploadIDUser(username);
+    }
   };
 
   const checkUsername = async (username) => {
@@ -68,27 +73,37 @@ export const OperationProvider = ({ children }) => {
     return data;
   };
 
-  const dataDailyTest = async ()=>{
-    console.log(id, "id dataDailyTest")
-    const {data} = await supabase
+  const dataDailyTest = async () => {
+    const { data } = await supabase
       .from("tests")
       .select("cps, data")
       .eq("id_utente", id);
     dataDayliTests_set(data);
-  }
-
-  const getDataTests = () => {
-    console.log(dataDayliTests, "dataDayliTests")
-    console.log(dataDailyTest(), "dataDayliTest")
-
   };
 
-  const getUsername = () => nickname;
+  const reloadChartsFilter = async (time)=>{
+    const { data } = await supabase
+      .from("tests")
+      .select("cps, data")
+      .eq("tempo", time)
+      .eq("id_utente", id);
+    chartTestData_set(data);
+  }
 
   return (
     <>
       <OperationDb.Provider
-        value={{ newUserRow, login, newRowClick, getUsername, getDataTests}}
+        value={{
+          newUserRow,
+          login,
+          newRowClick,
+          dataDayliTests,
+          dataDailyTest,
+          nickname,
+          registerDone,
+          reloadChartsFilter,
+          chartTestData
+        }}
       >
         {children}
       </OperationDb.Provider>

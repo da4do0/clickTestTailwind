@@ -2,23 +2,22 @@ import React, { useEffect, useState } from "react";
 import { useOperationDb } from "../../hooks/operationDb.hook";
 import { AreaChart } from "@mantine/charts";
 
+import USER from '../../assets/6zgjtx.webp';
+import ChartTest from "./ChartTest";
+
 const User = () => {
   const [usernameI, usernameI_set] = useState("");
   const [userInput, userInput_set] = useState("");
   const [passInput, passInput_set] = useState("");
   const [showLogin, showLogin_set] = useState(true);
-  const [dataDTests, dataDTests_set] = useState([]);
 
   const {
     newUserRow,
     login,
-    getUsername,
-    dataDayliTests,
-    waitDayliTests,
     dataDailyTest,
-    loginDone,
     registerDone,
-    nickname
+    nickname,
+    dataDayliTests
   } = useOperationDb();
 
   useEffect(()=>{
@@ -28,36 +27,24 @@ const User = () => {
 
   useEffect(() => {
     usernameI_set(nickname);
-    console.log(usernameI, "ciaoooooooooo")
     if(nickname !== ""){
       dataDailyTest();
     }
   }, []);
 
-
-  useEffect(()=>{
-    
-    console.log(getDataTests())
-    if(dataDayliTests !== undefined){
-      console.log(getDataTests())
-      console.log(dataDayliTests)
-      dataDTests_set(dataDayliTests)
-    }
-  }, [dataDayliTests, usernameI])
-
   const newUser = async (e) => {
     e.preventDefault();
-    if (newUserRow(userInput, passInput)) {
-      usernameI_set(userInput);
-    }
+    newUserRow(userInput, passInput)
     //TODO: else{messaggio errore user gia' esistente}
   };
 
+  useEffect(()=>{
+    usernameI_set(nickname)
+  }, [registerDone])
+
   const loginUser = (e) => {
     e.preventDefault();
-    if (login(userInput, passInput)) {
-      usernameI_set(userInput);
-    }
+    login(userInput, passInput)
     //TODO: else{user o password errati}
   };
 
@@ -73,7 +60,6 @@ const User = () => {
     return showLogin ? (
       <>
         <Login
-          newUser={newUser}
           newUserInput={newUserInput}
           newPassInput={newPassInput}
           loginUser={loginUser}
@@ -97,12 +83,18 @@ const User = () => {
       <main className=" absolute top-0 h-[100vh] w-[100%] grid place-items-center border border-red-950">
         {usernameI ? (
           <>
-            <section className=" border border-red-950 w-[70%] h-[60%]">
-              <div aria-busy={busyChar}>
+            <section className=" border border-red-950 w-[70%] h-[50%] flex">
+              <div className="  w-[60%] h-[100%] bg-[#8a8a8a6b] p-3">
+                <div className=" overflow-hidden rounded-[10px] grid place-items-center border border-green w-[150px] aspect-square">
+                  <img src={USER} alt="" className=" object-cover w-[100%] h-[100%]"/>
+                </div>
+              </div>
+              <ChartTest/>
+              
+              <div >
                 <AreaChart
-                  h={300}
                   data={dataDayliTests || []}
-                  dataKey="date"
+                  dataKey="data"
                   type="split"
                   strokeWidth={1}
                   dotProps={{ r: 2, strokeWidth: 1 }}
@@ -110,7 +102,6 @@ const User = () => {
                   series={[{ name: "cps", color: "bright" }]}
                 />
               </div>
-              <button onClick={getDataTests}>click</button>
               {/* //todo: hook che piglia i dati da operationdb e li ficca nei grafici */}
             </section>
           </>
