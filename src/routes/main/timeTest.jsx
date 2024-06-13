@@ -1,6 +1,5 @@
 import React from "react";
 
-
 const TimeTest = ({ uploadGoalSeconds, goalSeconds }) => {
   const timeTable = [1, 2, 3, 4, 5, 10, 11, 13, 14];
   const border = () => ({});

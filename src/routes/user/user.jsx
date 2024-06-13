@@ -2,9 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useOperationDb } from "../../hooks/operationDb.hook";
 import { AreaChart } from "@mantine/charts";
 
-import USER from '../../assets/6zgjtx.webp';
-import TestChart from "./test-chart";
-
 const User = () => {
   const [usernameI, usernameI_set] = useState("");
   const [userInput, userInput_set] = useState("");
@@ -12,11 +9,28 @@ const User = () => {
   const [showLogin, showLogin_set] = useState(true);
   const [dataDTests, dataDTests_set] = useState([]);
 
-  const { newUserRow, login, getUsername, dataDayliTests, getDataTests } = useOperationDb();
+  const {
+    newUserRow,
+    login,
+    getUsername,
+    dataDayliTests,
+    waitDayliTests,
+    dataDailyTest,
+    loginDone,
+    registerDone,
+    nickname
+  } = useOperationDb();
+
+  useEffect(()=>{
+    usernameI_set(nickname);
+  }, [nickname])
+
 
   useEffect(() => {
-    if (getUsername() !== null) {
-      usernameI_set(getUsername());
+    usernameI_set(nickname);
+    console.log(usernameI, "ciaoooooooooo")
+    if(nickname !== ""){
+      dataDailyTest();
     }
   }, []);
 
@@ -84,10 +98,10 @@ const User = () => {
         {usernameI ? (
           <>
             <section className=" border border-red-950 w-[70%] h-[60%]">
-              <div>
+              <div aria-busy={busyChar}>
                 <AreaChart
                   h={300}
-                  data={dataDTests}
+                  data={dataDayliTests || []}
                   dataKey="date"
                   type="split"
                   strokeWidth={1}
