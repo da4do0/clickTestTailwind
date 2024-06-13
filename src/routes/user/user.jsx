@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useOperationDb } from "../../hooks/operationDb.hook";
 import { AreaChart } from "@mantine/charts";
 
+import USER from '../../assets/6zgjtx.webp';
+import TestChart from "./test-chart";
+
 const User = () => {
   const [usernameI, usernameI_set] = useState("");
   const [userInput, userInput_set] = useState("");
@@ -18,18 +21,17 @@ const User = () => {
     dataDailyTest,
     loginDone,
     registerDone,
-    nickname
+    nickname,
   } = useOperationDb();
-
-  useEffect(()=>{
-    usernameI_set(nickname);
-  }, [nickname])
-
 
   useEffect(() => {
     usernameI_set(nickname);
-    console.log(usernameI, "ciaoooooooooo")
-    if(nickname !== ""){
+  }, [nickname]);
+
+  useEffect(() => {
+    usernameI_set(nickname);
+    console.log(usernameI, "ciaoooooooooo");
+    if (nickname !== "") {
       dataDailyTest();
     }
   }, []);
@@ -87,18 +89,29 @@ const User = () => {
       <main className=" absolute top-0 h-[100vh] w-[100%] grid place-items-center border border-red-950">
         {usernameI ? (
           <>
-            <section className=" border border-red-950 w-[70%] h-[60%]">
-              <div aria-busy={busyChar}>
-                <AreaChart
-                  h={300}
-                  data={dataDayliTests || []}
-                  dataKey="date"
-                  type="split"
-                  strokeWidth={1}
-                  dotProps={{ r: 2, strokeWidth: 1 }}
-                  activeDotProps={{ r: 3, strokeWidth: 1 }}
-                  series={[{ name: "cps", color: "bright" }]}
-                />
+            <section className=" border border-red-950 w-[70%] h-[40%]">
+              <div className="w-[100%] h-[100%]">
+                <section className=" bg-red-800 w-[60%] h-[100%] p-3">
+                  <div className="border border-red-900 grid place-items-center w-[150px] h-[150px] overflow-hidden rounded-[100%]">
+                    <img src={USER} alt="user's profile pic" srcset="" className=" object-cover w-[100%] h-[100%]"/>
+                  </div>
+                </section>
+                <section>
+                  <TestChart/>
+                </section>
+
+                {/* <div>Hisotry tests</div>
+                <div >
+                  <AreaChart
+                    data={dataDayliTests || []}
+                    dataKey="date"
+                    type="split"
+                    strokeWidth={1}
+                    dotProps={{ r: 2, strokeWidth: 1 }}
+                    activeDotProps={{ r: 3, strokeWidth: 1 }}
+                    series={[{ name: "cps", color: "bright" }]}
+                  />
+                </div> */}
               </div>
               {/* //todo: hook che piglia i dati da operationdb e li ficca nei grafici */}
             </section>

@@ -6,7 +6,7 @@ const OperationDb = createContext();
 export const OperationProvider = ({ children }) => {
   const { supabase } = useSupabase();
   const [id, id_set] = useState("");
-  const [nickname, nickname_set] = useState(null);
+  const [nickname, nickname_set] = useState("da4do0");
   const [dataDayliTests, dataDayliTests_set] = useState([]);
   const [loginDone, loginDone_set] = useState(null);
   const [registerDone, registerDone_set] = useState(null);
