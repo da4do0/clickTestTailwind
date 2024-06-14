@@ -9,16 +9,16 @@ const InfoTest = ({ seconds = 0, clicks = 0 }) => {
   };
 
   return (
-    <section className=" inline-flex items-center justify-evenly border border-violet col-span-2 col-start-2 row-span-1">
-      <div className="border rounded-lg border-red inline-flex flex-col items-center px-10 py-3">
+    <section className=" inline-flex items-center justify-evenly border-4 border-[#2c2e30] col-span-2 col-start-2 row-span-1 rounded-[10px]">
+      <div className=" bg-[#2c2e30] rounded-lg  inline-flex flex-col items-center px-10 py-3">
         <span>{seconds.toFixed(1)}</span>
         <span>Timer</span>
       </div>
-      <div className="border rounded-lg border-red inline-flex flex-col items-center px-10 py-3">
+      <div className=" bg-[#2c2e30] rounded-lg  inline-flex flex-col items-center px-10 py-3">
         <span>{clickXsecond()}</span>
         <span>Click/s</span>
       </div>
-      <div className="border rounded-lg border-red inline-flex flex-col items-center px-10 py-3">
+      <div className=" bg-[#2c2e30] rounded-lg  inline-flex flex-col items-center px-10 py-3">
         <span>{clicks}</span>
         <span>Clicks</span>
       </div>

@@ -6,10 +6,11 @@ const OperationDb = createContext();
 export const OperationProvider = ({ children }) => {
   const { supabase } = useSupabase();
   const [id, id_set] = useState(15);
-  const [nickname, nickname_set] = useState("da4do0");
+  const [nickname, nickname_set] = useState("");
   const [dataDayliTests, dataDayliTests_set] = useState([]);
   const [registerDone, registerDone_set] = useState(null);
   const [chartTestData, chartTestData_set] = useState([]);
+  const [dataLeaderboard, dataLeaderboard_set] = useState([]);
 
   const newRowClick = async (tempoTest, punteggioTest, date) => {
     if (nickname) {
@@ -36,13 +37,12 @@ export const OperationProvider = ({ children }) => {
 
   const newUserRow = async (username, password) => {
     const checkRowUser = await checkUsername(username);
-    console.log(checkRowUser)
-    if (checkRowUser.length ===0) {
-      const {data}=await supabase
+    if (checkRowUser.length === 0) {
+      const { data } = await supabase
         .from("Utenti")
         .insert([{ nickname: username, password: password }])
         .select();
-      if(data.length>0){
+      if (data.length > 0) {
         uploadNickname(username);
         uploadIDUser(username);
         registerDone_set(true);
@@ -81,14 +81,64 @@ export const OperationProvider = ({ children }) => {
     dataDayliTests_set(data);
   };
 
-  const reloadChartsFilter = async (time)=>{
+  const reloadChartsFilter = async (time) => {
     const { data } = await supabase
       .from("tests")
       .select("cps, data")
       .eq("tempo", time)
       .eq("id_utente", id);
     chartTestData_set(data);
-  }
+  };
+
+  const dataLeaderboardQuery = async (time) => {
+    const { data: tabellaRisultati } = await supabase
+      .from("tests")
+      .select("cps, id_utente")
+      .eq("tempo", time);
+
+    console.log(tabellaRisultati, "tabella ris leaderboard ");
+
+    const { data: listaNickname } = await supabase
+      .from("Utenti")
+      .select("id, nickname");
+    console.log(listaNickname, "tabella ris leaderboard ");
+
+    const cpsMap = new Map();
+
+    tabellaRisultati.forEach((item) => {
+      const currentCps = cpsMap.get(item.id_utente);
+      if (currentCps === undefined || item.cps > currentCps) {
+        cpsMap.set(item.id_utente, item.cps);
+      }
+    });
+
+    const result = Array.from(cpsMap, ([id_utente, max_cps]) => ({
+      id_utente,
+      cps: max_cps,
+    }));
+
+    const usersMap = new Map(listaNickname.map((user) => [user.id, user]));
+
+    result.forEach((score) => {
+      const user = usersMap.get(score.id_utente);
+      if (user) {
+        result.push({
+          id: score.id_utente,
+          nickname: user.nickname,
+          cps: score.cps,
+        });
+      }
+    });
+
+    const final = result.filter((element)=>{
+        if(element.nickname){
+          return element;
+        }
+    })
+
+    final.sort((a, b) => b.cps - a.cps);
+    dataLeaderboard_set(final);
+  };
 
   return (
     <>
@@ -102,7 +152,9 @@ export const OperationProvider = ({ children }) => {
           nickname,
           registerDone,
           reloadChartsFilter,
-          chartTestData
+          chartTestData,
+          dataLeaderboardQuery,
+          dataLeaderboard
         }}
       >
         {children}

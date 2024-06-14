@@ -16,15 +16,10 @@ const ChartTest = () => {
       <section className=" w-[40%] flex flex-col justify-around bg-[#8a8a8a6b] p-3">
         <div className=" flex justify-end ">
           <div className=" w-[90%] flex gap-1 overflow-x-scroll ">
-            {/* <button className="border border-blue-400 py-1 px-6 rounded-[10px]">
-              <span className=" text-[20px] block w-[100%] whitespace-nowrap">
-                All modes
-              </span>
-            </button> */}
             {timeTable.map((time) => (
               <button
                 key={time}
-                className="border border-blue-400 py-1 px-6 rounded-[10px]"
+                className="border border-blue-400 py-1 px-6 rounded-[10px] hover:bg-blue-400 active:bg-blue-400"
                 onClick={() => setDataChart(time)}
               >
                 <span className=" ">{time}</span>

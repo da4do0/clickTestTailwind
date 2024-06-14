@@ -1,16 +1,20 @@
 import React from "react";
+import { useOperationDb } from "../../hooks/operationDb.hook";
 
 const TimeTest = ({ uploadGoalSeconds, goalSeconds }) => {
+  
+
   const timeTable = [1, 2, 3, 4, 5, 10, 11, 13, 14];
-  const border = () => ({});
   return (
-    <section className="border border-red col-span-1 row-start-1 row-span-4 h-[100%]">
-      <div className="flex flex-col py-3 px-1 gap-3 overflow-y-scroll h-[100%] no-scrollbar">
+    <section className="col-span-1 row-start-1 row-span-4 h-[100%] overflow-hidden bg-[#2c2e30] rounded-[10px] px-2 pb-4">
+      <div className=" w-[100%] text-center py-2 h-[10%] text-[24px]">
+        <span>Test Mode</span>
+      </div>
+      <div className="flex flex-col py-3 px-1 gap-3 overflow-y-scroll h-[90%] no-scrollbar rounded-[5px]">
         {timeTable.map((time) => {
           return (
             <div
-              className=" text-center border border-red rounded-lg py-2 px-3"
-              style={{ border: goalSeconds == time ? "1px solid red" : "" }}
+              className=" text-center rounded-lg py-2 px-3 bg-[#323437] hover:bg-[#383a3d] active:bg-[#383a3d]"
               onClick={() => uploadGoalSeconds(time)}
               key={time}
             >

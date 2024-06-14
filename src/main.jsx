@@ -9,12 +9,14 @@ import { MantineProvider } from "@mantine/core";
 import Header from "./routes/header";
 import Main from "./routes/main/mainContainer";
 import User from "./routes/user/user";
+import ErrorPage from './routes/errorPage';
 import { OperationProvider } from "./hooks/operationDb.hook";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Header />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,

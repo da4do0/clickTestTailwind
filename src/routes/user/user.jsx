@@ -80,7 +80,7 @@ const User = () => {
 
   return (
     <>
-      <main className=" absolute top-0 h-[100vh] w-[100%] grid place-items-center border border-red-950">
+      <main className=" absolute top-0 h-[100vh] w-[100%] flex justify-center items-center flex-col">
         {usernameI ? (
           <>
             <section className=" border border-red-950 w-[70%] h-[50%] flex">
@@ -90,19 +90,6 @@ const User = () => {
                 </div>
               </div>
               <ChartTest/>
-              
-              <div >
-                <AreaChart
-                  data={dataDayliTests || []}
-                  dataKey="data"
-                  type="split"
-                  strokeWidth={1}
-                  dotProps={{ r: 2, strokeWidth: 1 }}
-                  activeDotProps={{ r: 3, strokeWidth: 1 }}
-                  series={[{ name: "cps", color: "bright" }]}
-                />
-              </div>
-              {/* //todo: hook che piglia i dati da operationdb e li ficca nei grafici */}
             </section>
           </>
         ) : (
@@ -116,7 +103,7 @@ const User = () => {
 const Login = ({ newUserInput, newPassInput, loginUser }) => {
   return (
     <>
-      <form className="flex flex-col w-[40%] gap-2">
+      <form className="flex flex-col w-[40%] gap-2 border-4 border-[#8a8a8a6b] h-[40%] flex flex-col justify-center items-center">
         <input
           type="text"
           placeholder="Username"
@@ -138,7 +125,7 @@ const Login = ({ newUserInput, newPassInput, loginUser }) => {
 const SignUp = ({ newUser, newUserInput, newPassInput }) => {
   return (
     <>
-      <form className="flex flex-col w-[40%] gap-2">
+      <form className="flex flex-col w-[40%] gap-2 border-4 border-[#8a8a8a6b] h-[40%] flex flex-col justify-center items-center">
         <input
           type="text"
           placeholder="Username"

@@ -14,7 +14,7 @@ const Main = () => {
   const [secondsStep, secondsStep_set] = useState(0);
   const [show, show_set] = useState(false);
   const [data, data_set] = useState([]);
-  const {newRowClick} = useOperationDb();
+  const {newRowClick, dataLeaderboardQuery} = useOperationDb();
 
   const addData=(sec, clickPerSec) =>{
     data_set([...data, {date: sec.toString(), click: clickPerSec}]);
@@ -36,6 +36,7 @@ const Main = () => {
       clearInterval(timer.current);
       timer.current = null;
       newRowClick(goalSeconds, (click/seconds).toFixed(1), returnDate())
+      dataLeaderboardQuery(goalSeconds);
     }
   };
 
@@ -60,6 +61,7 @@ const Main = () => {
   };
 
   const uploadGoalSeconds = (newSeconds) => {
+    dataLeaderboardQuery(newSeconds);
     goalSeconds_set(newSeconds);
     seconds_set(0);
     click_set(0);
@@ -92,7 +94,7 @@ const Main = () => {
     
       <PopUp show={show} data={data} setShow={hiddenPopUp} seconds={seconds} clicks={click}/>
       <main className=" py-[50px]">
-        <section className="border border-red grid grid-cols-4 grid-rows-4 gap-4 w-[80%] h-[450px] mx-auto my-0">
+        <section className="grid grid-cols-4 grid-rows-4 gap-4 w-[80%] h-[450px] mx-auto my-0">
           <InfoTest seconds={seconds} clicks={click} />
 
           <TimeTest
@@ -100,7 +102,7 @@ const Main = () => {
             goalSeconds={goalSeconds}
           />
 
-          <Leaderboard />
+          <Leaderboard/>
           <ClickArea mouseClick={mouseClick} />
         </section>
       </main>
