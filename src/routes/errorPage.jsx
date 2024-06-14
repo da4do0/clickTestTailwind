@@ -4,7 +4,6 @@ import Header from "./header";
 
 const ErrorPage = ()=>{
     return(<>
-    <Header/>
     <div className=" absolute top-0 w-[100%] h-[100%] flex flex-col justify-center items-center">
         <h1 className=" text-[80px]">Error 404</h1>
         <h2 className=" text-[30px]">Come ci sei arrivato su questa pagina?</h2>

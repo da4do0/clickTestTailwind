@@ -2,6 +2,7 @@ import React from "react";
 import { useOperationDb } from "../../hooks/operationDb.hook";
 
 const TimeTest = ({ uploadGoalSeconds, goalSeconds }) => {
+
   
 
   const timeTable = [1, 2, 3, 4, 5, 10, 11, 13, 14];
@@ -14,7 +15,7 @@ const TimeTest = ({ uploadGoalSeconds, goalSeconds }) => {
         {timeTable.map((time) => {
           return (
             <div
-              className=" text-center rounded-lg py-2 px-3 bg-[#323437] hover:bg-[#383a3d] active:bg-[#383a3d]"
+              className=" text-center rounded-lg py-2 px-3 bg-[#323437] hover:bg-[#4d6a74] focus:bg-[#8FC2D3]"
               onClick={() => uploadGoalSeconds(time)}
               key={time}
             >

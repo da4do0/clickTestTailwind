@@ -95,7 +95,7 @@ const Main = () => {
       <PopUp show={show} data={data} setShow={hiddenPopUp} seconds={seconds} clicks={click}/>
       <main className=" py-[50px]">
         <section className="grid grid-cols-4 grid-rows-4 gap-4 w-[80%] h-[450px] mx-auto my-0">
-          <InfoTest seconds={seconds} clicks={click} />
+          <InfoTest seconds={seconds} clicks={click} goalSeconds={goalSeconds}/>
 
           <TimeTest
             uploadGoalSeconds={uploadGoalSeconds}
