@@ -1,13 +1,14 @@
 import React from "react";
 import { useOperationDb } from "../../hooks/operationDb.hook";
 
-const TimeTest = ({ uploadGoalSeconds, goalSeconds, mobile}) => {
-
-  
-
+const TimeTest = ({ uploadGoalSeconds, goalSeconds, mobile, openModes}) => {
   const timeTable = [1, 2, 3, 4, 5, 10, 11, 13, 14];
   return (
-    <section className={`col-span-1 row-start-1 row-span-4 h-[100%] overflow-hidden bg-[#2c2e30] rounded-[10px] px-2 pb-4 ${mobile? "absolute w-[70%] bg-white rounded-none":"mobile:hidden"}`}>
+    <section
+      className={`col-span-1 row-start-1 row-span-4 h-[100%] overflow-hidden bg-[#2c2e30] rounded-[10px] px-2 pb-4 ${
+        mobile ? "absolute w-[65vw] h-[90vh] rounded-none" : "mobile:hidden"
+      } ${ openModes ? "":"left-[-100%]"}`}
+    >
       <div className=" w-[100%] text-center py-2 h-[10%] text-[24px]">
         <span>Test Mode</span>
       </div>

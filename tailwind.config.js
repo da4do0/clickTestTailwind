@@ -10,6 +10,7 @@ export default {
     screens:{
       'sm-mobile': {'max': '375px'},
       'mobile': {'max': '480px'},
+      'lg': {'min': '1024'}
     }
     
   },

@@ -103,7 +103,7 @@ const User = () => {
 const Login = ({ newUserInput, newPassInput, loginUser }) => {
   return (
     <>
-      <form className="flex flex-col w-[40%] gap-2 border-4 border-[#8a8a8a6b] h-[40%] flex flex-col justify-center items-center">
+      <form className="flex flex-col w-[40%] gap-2 border-4 border-[#8a8a8a6b] h-[40%] flex flex-col justify-center items-center mobile:w-[80%]">
         <input
           type="text"
           placeholder="Username"
@@ -125,7 +125,7 @@ const Login = ({ newUserInput, newPassInput, loginUser }) => {
 const SignUp = ({ newUser, newUserInput, newPassInput }) => {
   return (
     <>
-      <form className="flex flex-col w-[40%] gap-2 border-4 border-[#8a8a8a6b] h-[40%] flex flex-col justify-center items-center">
+      <form className="flex flex-col w-[40%] gap-2 border-4 border-[#8a8a8a6b] h-[40%] flex flex-col justify-center items-center mobile:w-[80%]">
         <input
           type="text"
           placeholder="Username"
