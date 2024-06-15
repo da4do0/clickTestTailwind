@@ -110,26 +110,33 @@ const Main = () => {
         seconds={seconds}
         clicks={click}
       />
-      <main className=" py-[50px] sm-mobile:w-[100vw] border mobile: py-[0px]">
-        <section className=" mobile:h-[80px] relative border">
-          <div
-            className={` mobile: bg-[#2c2e30] w-[50px] h-[50px] absolute top-[15px] grid place-items-center rounded-r-lg ${
-              openModes ? "right-[20%]" : ""
-            }`}
-            onClick={modeOnclick}
-          >
-            <svg
-              width="24"
-              height="16"
-              viewBox="0 0 24 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+      <main className=" py-[50px] sm-mobile:w-[100vw] border mobile:py-[0px]">
+        <section className=" mobile:h-[80px] relative border w-[100%]">
+          <div>
+            <TimeTest
+              uploadGoalSeconds={uploadGoalSeconds}
+              goalSeconds={goalSeconds}
+              mobile={true}
+            />
+            <div
+              className={` mobile: bg-[#2c2e30] w-[50px] h-[50px] absolute top-[15px] grid place-items-center rounded-r-lg ${
+                openModes ? "right-[20%]" : ""
+              }`}
+              onClick={modeOnclick}
             >
-              <path
-                d="M0 16V13.3333H8V16H0ZM0 9.33333V6.66667H16V9.33333H0ZM0 2.66667V0H24V2.66667H0Z"
-                fill="#969696"
-              />
-            </svg>
+              <svg
+                width="24"
+                height="16"
+                viewBox="0 0 24 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 16V13.3333H8V16H0ZM0 9.33333V6.66667H16V9.33333H0ZM0 2.66667V0H24V2.66667H0Z"
+                  fill="#969696"
+                />
+              </svg>
+            </div>
           </div>
           <div
             className={` mobile: bg-[#2c2e30] w-[50px] h-[50px] absolute top-[15px] grid place-items-center rounded-l-lg ${
@@ -153,6 +160,7 @@ const Main = () => {
               />
             </svg>
           </div>
+
         </section>
 
         <section className="grid grid-cols-4 grid-rows-4 gap-4 w-[50%] h-[450px] mx-auto my-0 mobile:w-[90%] mobile:py-[10px]">
@@ -165,6 +173,7 @@ const Main = () => {
           <TimeTest
             uploadGoalSeconds={uploadGoalSeconds}
             goalSeconds={goalSeconds}
+            mobile={false}
           />
 
           <Leaderboard />
