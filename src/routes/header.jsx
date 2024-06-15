@@ -12,14 +12,14 @@ export default function Header() {
             <img src={logo} alt="logo" />
           </div>
         </Link>
-        <nav className="">
+        {/* <nav className="">
           <ul className=" inline-flex gap-[25px] items-center">
             <Link to="/">
               <li className=" text-xl w-[150px] text-center">Click test</li>
             </Link>
             <li className=" text-xl w-[150px] text-center">Space test</li>
           </ul>
-        </nav>
+        </nav> */}
         <div className=" w-[100px]">
           <Link to="/user">
             <img src={userSvg} alt="user icon" />

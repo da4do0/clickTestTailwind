@@ -9,11 +9,11 @@ const Leaderboard = () => {
   }, [dataLeaderboard]);
 
   return (
-    <section className="col-end-5 row-span-4 h-[100%] bg-[#2c2e30] rounded-[10px] px-2 pb-4">
+    <section className="col-end-5 row-span-4 h-[100%] bg-[#2c2e30] rounded-[10px] px-2 pb-4 mobile:hidden">
       <div className=" w-[100%] text-center py-2 h-[10%] text-[24px]">
         <span>Leaderboard</span>
       </div>
-      <div className="flex flex-col py-3 px-1 gap-3 overflow-y-scroll h-[100%] no-scrollbar">
+      <div className="flex flex-col py-3 px-1 gap-3 overflow-y-scroll h-[100%] no-scrollbar ">
         {dataLeaderboard.length > 0
           ? dataLeaderboard.map(({ nickname, cps }, index) => {
               return (
