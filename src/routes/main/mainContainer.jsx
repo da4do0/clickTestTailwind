@@ -92,7 +92,6 @@ const Main = () => {
     }
     if (seconds >= goalSeconds && goalSeconds !== 0) {
       stopTimer();
-      console.log(data);
       show_set(true);
     }
   }, [seconds, goalSeconds, clickPerSec]);

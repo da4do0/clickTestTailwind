@@ -5,7 +5,6 @@ const Leaderboard = ({mobile, openLeaderboard}) => {
   const { dataLeaderboard } = useOperationDb();
 
   useEffect(() => {
-    console.log(dataLeaderboard.length);
   }, [dataLeaderboard]);
 
   return (

@@ -7,7 +7,6 @@ const ChartTest = () => {
   const timeTable = [1, 2, 3, 4, 5, 10, 11, 13, 14];
 
   const setDataChart = (time) => {
-    console.log(time);
     reloadChartsFilter(time);
   };
 
