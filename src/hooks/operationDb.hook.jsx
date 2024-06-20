@@ -57,7 +57,6 @@ export const OperationProvider = ({ children }) => {
       .like("nickname", username)
       .like("password", password);
 
-    console.log(data);
 
     if (data.length > 0) {
       uploadNickname(username);
@@ -96,12 +95,10 @@ export const OperationProvider = ({ children }) => {
       .select("cps, id_utente")
       .eq("tempo", time);
 
-    console.log(tabellaRisultati, "tabella ris leaderboard ");
 
     const { data: listaNickname } = await supabase
       .from("Utenti")
       .select("id, nickname");
-    console.log(listaNickname, "tabella ris leaderboard ");
 
     const cpsMap = new Map();
 

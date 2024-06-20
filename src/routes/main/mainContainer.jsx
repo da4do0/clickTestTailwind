@@ -165,7 +165,7 @@ const Main = () => {
           </div>
         </section>
 
-        <section className="grid grid-cols-4 grid-rows-4 gap-4 w-[50%] h-[450px] mx-auto my-0 mobile:w-[90%] mobile:py-[10px]">
+        <section className="grid grid-cols-4 grid-rows-4 gap-4 w-[70%] h-[450px] mx-auto my-0 mobile:w-[90%] mobile:py-[10px]">
           <InfoTest
             seconds={seconds}
             clicks={click}

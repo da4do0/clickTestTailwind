@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useOperationDb } from "../../hooks/operationDb.hook";
 import { AreaChart } from "@mantine/charts";
 
-import USER from '../../assets/6zgjtx.webp';
+import USER from "../../assets/6zgjtx.webp";
 import ChartTest from "./ChartTest";
 
 const User = () => {
@@ -17,34 +17,33 @@ const User = () => {
     dataDailyTest,
     registerDone,
     nickname,
-    dataDayliTests
+    dataDayliTests,
   } = useOperationDb();
-
-  useEffect(()=>{
-    usernameI_set(nickname);
-  }, [nickname])
-
 
   useEffect(() => {
     usernameI_set(nickname);
-    if(nickname !== ""){
+  }, [nickname]);
+
+  useEffect(() => {
+    usernameI_set(nickname);
+    if (nickname !== "") {
       dataDailyTest();
     }
   }, []);
 
   const newUser = async (e) => {
     e.preventDefault();
-    newUserRow(userInput, passInput)
+    newUserRow(userInput, passInput);
     //TODO: else{messaggio errore user gia' esistente}
   };
 
-  useEffect(()=>{
-    usernameI_set(nickname)
-  }, [registerDone])
+  useEffect(() => {
+    usernameI_set(nickname);
+  }, [registerDone]);
 
   const loginUser = (e) => {
     e.preventDefault();
-    login(userInput, passInput)
+    login(userInput, passInput);
     //TODO: else{user o password errati}
   };
 
@@ -63,8 +62,9 @@ const User = () => {
           newUserInput={newUserInput}
           newPassInput={newPassInput}
           loginUser={loginUser}
+          showLogin_set={showLogin_set}
+          showLogin={showLogin}
         />
-        <button onClick={() => showLogin_set(!showLogin)}>Sign Up</button>
       </>
     ) : (
       <>
@@ -72,8 +72,9 @@ const User = () => {
           newUser={newUser}
           newUserInput={newUserInput}
           newPassInput={newPassInput}
+          showLogin_set={showLogin_set}
+          showLogin={showLogin}
         />
-        <button onClick={() => showLogin_set(!showLogin)}>Sign In</button>
       </>
     );
   };
@@ -86,10 +87,14 @@ const User = () => {
             <section className=" border border-red-950 w-[70%] h-[50%] flex">
               <div className="  w-[60%] h-[100%] bg-[#8a8a8a6b] p-3">
                 <div className=" overflow-hidden rounded-[10px] grid place-items-center border border-green w-[150px] aspect-square">
-                  <img src={USER} alt="" className=" object-cover w-[100%] h-[100%]"/>
+                  <img
+                    src={USER}
+                    alt=""
+                    className=" object-cover w-[100%] h-[100%]"
+                  />
                 </div>
               </div>
-              <ChartTest/>
+              <ChartTest />
             </section>
           </>
         ) : (
@@ -100,45 +105,67 @@ const User = () => {
   );
 };
 
-const Login = ({ newUserInput, newPassInput, loginUser }) => {
+const Login = ({ newUserInput, newPassInput, loginUser, showLogin_set, showLogin}) => {
   return (
     <>
-      <form className="flex flex-col w-[40%] gap-2 border-4 border-[#8a8a8a6b] h-[40%] flex flex-col justify-center items-center mobile:w-[80%]">
-        <input
-          type="text"
-          placeholder="Username"
-          className=" w-[50%] my-0 mx-auto text-black"
-          onChange={(e) => newUserInput(e)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className=" w-[50%] my-0 mx-auto text-black"
-          onChange={(e) => newPassInput(e)}
-        />
-        <button onClick={(e) => loginUser(e)}>Sing in</button>
+      <form className="flex flex-col w-[30%] gap-[50px] border-4 border-[#8a8a8a6b] py-[50px] flex flex-col justify-center items-center mobile:w-[80%]">
+        <div className=" w-[80%] flex justify-between">
+          <span className="text-[20px]">Login</span>
+          <button onClick={() => showLogin_set(!showLogin)} className="text-[14px]"> Signup</button>
+        </div>
+        <div className=" w-[80%] flex flex-col items-center gap-2">
+          <input
+            type="text"
+            placeholder="Username"
+            className=" w-[80%] my-0 mx-auto text-black px-4 py-2"
+            onChange={(e) => newUserInput(e)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className=" w-[80%] my-0 mx-auto text-black px-4 py-2"
+            onChange={(e) => newPassInput(e)}
+          />
+          <button
+            onClick={(e) => loginUser(e)}
+            className=" bg-[#8FC2D3] w-[80%] py-2"
+          >
+            Login
+          </button>
+        </div>
       </form>
     </>
   );
 };
 
-const SignUp = ({ newUser, newUserInput, newPassInput }) => {
+const SignUp = ({ newUser, newUserInput, newPassInput, showLogin_set, showLogin}) => {
   return (
     <>
-      <form className="flex flex-col w-[40%] gap-2 border-4 border-[#8a8a8a6b] h-[40%] flex flex-col justify-center items-center mobile:w-[80%]">
-        <input
-          type="text"
-          placeholder="Username"
-          className=" w-[50%] my-0 mx-auto text-black"
-          onChange={(e) => newUserInput(e)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className=" w-[50%] my-0 mx-auto text-black"
-          onChange={(e) => newPassInput(e)}
-        />
-        <button onClick={newUser}>Sing up</button>
+    <form className="flex flex-col w-[30%] gap-[50px] border-4 border-[#8a8a8a6b] py-[50px] flex flex-col justify-center items-center mobile:w-[80%]">
+        <div className=" w-[80%] flex justify-between">
+          <span className="text-[20px]">Signup</span>
+          <button onClick={() => showLogin_set(!showLogin)} className="text-[14px]"> Login</button>
+        </div>
+        <div className=" w-[80%] flex flex-col items-center gap-2">
+          <input
+            type="text"
+            placeholder="Username"
+            className=" w-[80%] my-0 mx-auto text-black px-4 py-2"
+            onChange={(e) => newUserInput(e)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className=" w-[80%] my-0 mx-auto text-black px-4 py-2"
+            onChange={(e) => newPassInput(e)}
+          />
+          <button
+            onClick={(e) => newUser(e)}
+            className=" bg-[#8FC2D3] w-[80%] py-2"
+          >
+            Signup
+          </button>
+        </div>
       </form>
     </>
   );
